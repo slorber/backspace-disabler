@@ -12,11 +12,10 @@ Require it with CommonJS loader (Browserify / Webpack...)
 ```javascript
 var BackspaceDisabler = require("backspace-disabler");
 
-
-BackspaceDisabler.disable(); // Disable the backspace that triggers backward navigation
-BackspaceDisabler.enable(); // Revert to normal
-
-
+// Disable the backspace that triggers backward navigation
+BackspaceDisabler.disable(); 
+// Revert to normal
+BackspaceDisabler.enable();
 
 // Can also be applied to a specific element:
 var element = document.getElementById("someEl");
