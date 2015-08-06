@@ -1,0 +1,23 @@
+{
+  "name": "backspace-disabler",
+  "version": "1.0.0",
+  "description": "Disable the annoying browser backward navigation when the user press the backspace key",
+  "keywords": [
+    "browser",
+    "html",
+    "backward",
+    "navigation",
+    "default",
+    "preventDefault",
+    "backspace",
+    "listener"
+  ],
+  "author": "Sebastien Lorber",
+  "homepage": "https://github.com/slorber/backspace-disabler",
+  "bugs": "https://github.com/slorber/backspace-disabler/issues",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/slorber/backspace-disabler.git"
+  }
+}
