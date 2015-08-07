@@ -32,7 +32,9 @@ function removeHandler(element, type, handler) {
 // or is inside an active contenteditable
 function isInActiveContentEditable(node) {
     while (node) {
-        if ( node.getAttribute && node.getAttribute("contenteditable") === "true" ) {
+        if ( node.getAttribute && 
+             node.getAttribute("contenteditable") && 
+             node.getAttribute("contenteditable").toUpperCase() === "TRUE" ) {
             return true;
         }
         node = node.parentNode;
