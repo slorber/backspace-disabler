@@ -1,6 +1,6 @@
 {
   "name": "backspace-disabler",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Disable the annoying browser backward navigation when the user press the backspace key",
   "keywords": [
     "browser",
