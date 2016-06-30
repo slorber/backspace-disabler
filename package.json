@@ -11,7 +11,7 @@
     "preventDefault",
     "backspace",
     "listener",
-    "prevent",
+    "prevent"
   ],
   "author": "Sebastien Lorber",
   "homepage": "https://github.com/slorber/backspace-disabler",
