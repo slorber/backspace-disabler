@@ -44,7 +44,11 @@ function isInActiveContentEditable(node) {
 
 
 
-var ValidInputTypes = ['TEXT','PASSWORD','FILE','EMAIL','SEARCH','DATE'];
+// See http://www.w3schools.com/html/html_form_input_types.asp
+// See https://github.com/slorber/backspace-disabler/issues/1
+var ValidInputTypes = ['TEXT','PASSWORD','FILE','EMAIL','SEARCH','DATE','NUMBER','MONTH','WEEK','TIME','DATETIME','DATETIME-LOCAL','TEL','URL'];
+
+
 
 function isActiveFormItem(node) {
     var tagName = node.tagName.toUpperCase();

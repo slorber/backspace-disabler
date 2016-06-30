@@ -3,7 +3,15 @@
 
 Disable the annoying backward navigation that occurs when the user press the backspace key.
 
-It does so by using `preventDefaut()`, and does not cancel the ability of the user to delete text or content on form inputs and contenteditable elements.
+
+# Features
+
+- Prevent browser back on backspace (by using `preventDefaut()`)
+- Does not break ability of user to delete content on all known input types
+- Supports contentEditable (in read/edit mode)
+- Allow to apply the behavior globally or on a subtree
+- No dependency
+
 
 # Usage
 
@@ -17,10 +25,13 @@ BackspaceDisabler.disable();
 // Revert to normal
 BackspaceDisabler.enable();
 
-// Can also be applied to a specific element:
-var element = document.getElementById("someEl");
-BackspaceDisabler.disable(element);
-BackspaceDisabler.enable(element);
+// Can also be applied to a specific element tree:
+var myWidget = document.getElementById("myWidget");
+BackspaceDisabler.disable(myWidget);
+BackspaceDisabler.enable(myWidget);
 
 ```
 
+# Credits
+
+The ideas of this lib come from [StackOverflow](http://stackoverflow.com/questions/1495219/how-can-i-prevent-the-backspace-key-from-navigating-back)
