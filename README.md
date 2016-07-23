@@ -1,8 +1,6 @@
 # BACKSPACE DISABLER
 
-
 Disable the annoying backward navigation that occurs when the user press the backspace key.
-
 
 # Features
 
@@ -12,6 +10,14 @@ Disable the annoying backward navigation that occurs when the user press the bac
 - Allow to apply the behavior globally or on a subtree
 - No dependency
 
+# Installation
+
+NPM:
+```
+npm install backspace-disabler
+```
+
+Or just copy the code inside index.js into your codebase.
 
 # Usage
 
