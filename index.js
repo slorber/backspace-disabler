@@ -1,104 +1,90 @@
-"use strict"
+var backspaceCode = 8
 
-
-var Backspace = 8;
-
-
-
-// See http://stackoverflow.com/questions/12949590/how-to-detach-event-in-ie-6-7-8-9-using-javascript
-function addHandler(element, type, handler) {
-    if (element.addEventListener) {
-        element.addEventListener(type, handler, false);
-    } else if (element.attachEvent) {
-        element.attachEvent("on" + type, handler);
-    } else {
-        element["on" + type] = handler;
+    // See http://www.w3schools.com/html/html_form_input_types.asp
+    // See https://github.com/slorber/backspace-disabler/issues/1
+    var validInputTypes = {
+        TEXT:1,PASSWORD:1,FILE:1,EMAIL:1,SEARCH:1,DATE:1,NUMBER:1,
+        MONTH:1,WEEK:1,TIME:1,DATETIME:1,'DATETIME-LOCAL':1,TEL:1,URL:1
     }
-}
-function removeHandler(element, type, handler) {
-    if (element.removeEventListener) {
-        element.removeEventListener(type, handler, false);
-    } else if (element.detachEvent) {
-        element.detachEvent("on" + type, handler);
-    } else {
-        element["on" + type] = null;
+
+    // Disables the backspace from triggering the browser to go back one history item (which often changes pages)
+    exports.disable = function(el) {
+        addHandler(el || document,"keydown",disabler)
     }
-}
+
+    // Reenable the browser backs
+    exports.enable = function(el) {
+        removeHandler(el || document,"keydown",disabler)
+    }
 
 
-
-
-// Test wether or not the given node is an active contenteditable,
-// or is inside an active contenteditable
-function isInActiveContentEditable(node) {
-    while (node) {
-        if ( node.getAttribute && 
-             node.getAttribute("contenteditable") && 
-             node.getAttribute("contenteditable").toUpperCase() === "TRUE" ) {
-            return true;
+    // See http://stackoverflow.com/questions/1495219/how-can-i-prevent-the-backspace-key-from-navigating-back
+    function disabler(event) {
+        if (event.keyCode === backspaceCode) {
+            var node = event.srcElement || event.target
+            // We don't want to disable the ability to delete content in form inputs and contenteditables
+            if ( !isActiveFormItem(node) ) {
+                event.preventDefault()
+            }
         }
-        node = node.parentNode;
     }
-    return false;
-}
 
-
-
-// See http://www.w3schools.com/html/html_form_input_types.asp
-// See https://github.com/slorber/backspace-disabler/issues/1
-var ValidInputTypes = ['TEXT','PASSWORD','FILE','EMAIL','SEARCH','DATE','NUMBER','MONTH','WEEK','TIME','DATETIME','DATETIME-LOCAL','TEL','URL'];
-
-
-
-function isActiveFormItem(node) {
-    var tagName = node.tagName.toUpperCase();
-    var isInput = ( tagName === "INPUT" && ValidInputTypes.indexOf(node.type.toUpperCase()) >= 0 );
-    var isTextarea = ( tagName === "TEXTAREA" );
-    if ( isInput || isTextarea ) {
-        var isDisabled = node.readOnly || node.disabled;
-        return !isDisabled;
-    }
-    else if ( isInActiveContentEditable(node) ) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-
-
-// See http://stackoverflow.com/questions/1495219/how-can-i-prevent-the-backspace-key-from-navigating-back
-function disabler(event) {
-    if (event.keyCode === Backspace) {
-        var node = event.srcElement || event.target;
-        // We don't want to disable the ability to delete content in form inputs and contenteditables
-        if ( isActiveFormItem(node) ) {
-            // Do nothing
+    // See http://stackoverflow.com/questions/12949590/how-to-detach-event-in-ie-6-7-8-9-using-javascript
+    function addHandler(element, type, handler) {
+        if (element.addEventListener) {
+            element.addEventListener(type, handler, false)
+        } else if (element.attachEvent) {
+            element.attachEvent("on" + type, handler)
+        } else {
+            element["on" + type] = handler
         }
-        // But in any other cases we prevent the default behavior that triggers a browser backward navigation
+    }
+    function removeHandler(element, type, handler) {
+        if (element.removeEventListener) {
+            element.removeEventListener(type, handler, false)
+        } else if (element.detachEvent) {
+            element.detachEvent("on" + type, handler)
+        } else {
+            element["on" + type] = null
+        }
+    }
+
+    // Returns true if the node is or is inside an active contenteditable
+    function isInActiveContentEditable(node) {
+        while (node) {
+            if ( node.getAttribute &&
+                 node.getAttribute("contenteditable") &&
+                 node.getAttribute("contenteditable").toUpperCase() === "TRUE" ) {
+                return true
+            }
+
+            node = node.parentNode
+        }
+
+        return false
+    }
+
+    // returns true if the element
+    function connectedToTheDom(node) {
+        while (node !== document && node.parentNode) {
+            node = node.parentNode
+        }
+
+        return node === document
+    }
+
+    function isActiveFormItem(node) {
+        var tagName = node.tagName.toUpperCase()
+        var isInput = ( tagName === "INPUT" && node.type.toUpperCase() in validInputTypes)
+        var isTextarea = ( tagName === "TEXTAREA" )
+        if ( isInput || isTextarea ) {
+            var isDisabled = node.readOnly || node.disabled
+            return !isDisabled && connectedToTheDom(node)  // the element may have been disconnected from the dom between the event happening and the end of the event chain, which is another case that triggers history changes
+        }
+        else if ( isInActiveContentEditable(node) ) {
+            return connectedToTheDom(node)
+        }
         else {
-            event.preventDefault();
+            return false
         }
     }
-}
-
-
-/**
- * By default the browser issues a back nav when the focus is not on a form input / textarea
- * But users often press back without focus, and they loose all their form data :(
- *
- * Use this if you want the backspace to never trigger a browser back
- */
-exports.disable = function(el) {
-    addHandler(el || document,"keydown",disabler);
-};
-
-/**
- * Reenable the browser backs
- */
-exports.enable = function(el) {
-    removeHandler(el || document,"keydown",disabler);
-};
-
-
-
