@@ -64,13 +64,9 @@ var backspaceCode = 8
         return false
     }
 
-    // returns true if the element
+    // returns true if the element is contained within a document
     function connectedToTheDom(node) {
-        while (node !== document && node.parentNode) {
-            node = node.parentNode
-        }
-
-        return node === document
+      return node.ownerDocument.contains(node);
     }
 
     function isActiveFormItem(node) {
