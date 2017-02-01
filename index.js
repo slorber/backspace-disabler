@@ -66,7 +66,9 @@ var backspaceCode = 8
 
     // returns true if the element is contained within a document
     function connectedToTheDom(node) {
-      return node.ownerDocument.contains(node);
+      // IE does not have contains method on document element, only body   
+      var container = node.ownerDocument.contains ? node.ownerDocument : node.ownerDocument.body;
+      return container.contains(node);
     }
 
     function isActiveFormItem(node) {
