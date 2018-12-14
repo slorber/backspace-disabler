@@ -41,3 +41,8 @@ BackspaceDisabler.enable(myWidget);
 # Credits
 
 The ideas of this lib come from [StackOverflow](http://stackoverflow.com/questions/1495219/how-can-i-prevent-the-backspace-key-from-navigating-back)
+
+# Hire a freelance expert
+
+Looking for a React/ReactNative freelance expert with more than 5 years production experience?
+Contact me from my [website](https://sebastienlorber.com/) or with [Twitter](https://twitter.com/sebastienlorber).
