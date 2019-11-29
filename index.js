@@ -53,9 +53,9 @@ var backspaceCode = 8
     function isInActiveContentEditable(node) {
         while (node) {
             if ( node.getAttribute &&
-                 node.getAttribute("contenteditable") &&
-                 node.getAttribute("contenteditable").toUpperCase() === "TRUE" ) {
-                return true
+                 node.getAttribute("contenteditable")) {
+                // Some nested contenteditable = true/false element;
+                return node.getAttribute("contenteditable").toUpperCase() === "TRUE";
             }
 
             node = node.parentNode
